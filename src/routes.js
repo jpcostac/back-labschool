@@ -7,5 +7,6 @@ route.options("*",cors())
 
 //Endpoints - Curso
 route.get('/curso', cursoController.findAllTurmas)
+route.post('/curso', cursoController.saveCurso)
 
 module.exports = route

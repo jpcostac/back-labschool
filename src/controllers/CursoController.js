@@ -1,3 +1,4 @@
+const { response } = require('express')
 const cursoService = require('../services/CursoService')
 
 module.exports = {
@@ -19,5 +20,24 @@ module.exports = {
             })
         }
         response.status(200).json(json)
-    } 
+    }, 
+    //Método para cadastrar um curso
+    saveCurso: async (request,response) => {
+        let json = {error: "", result: {}}
+
+        let nome = request.body.nomeCurso
+
+        if(nome){
+            let curso = await cursoService.createCurso(nome)
+
+            json.result ={
+                id: curso.insertId,
+                nome: nome
+            }
+        }else{
+            json.error = "Nome do curso é obrigatório"
+        }
+
+        response.status(201).json(json)
+    }
 }
