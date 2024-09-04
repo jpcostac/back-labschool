@@ -17,7 +17,7 @@ module.exports = {
 
     createCurso: (nome) => {
         return new Promise((resolve, reject) => {
-            database.query(`INSERT INTO curso VALUES (null, "${nome}",null) `,(err,result) => {
+            database.query(`INSERT INTO curso VALUES (null, "${nome}",0) `,(err,result) => {
             if(err){
                 reject(err)
                 return
