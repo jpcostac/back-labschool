@@ -2,6 +2,29 @@ const { response, request } = require('express')
 const alunoService = require('../services/AlunoService')
 
 module.exports = {
+    //Metodo para salvar um novo aluno
+    saveAluno: async (request, response) => {
+        let json = {error: "", result: ""}
+
+        let foto = request.file.buffer
+        let nome = request.body.nome
+        let telefone = request.body.telefone
+        let data_nascimento = request.body.data_nascimento
+        let fk_curso = request.body.fk_curso
+        let email = request.body.email
+
+        if(!nome || !telefone || !data_nascimento || !fk_curso || !email){
+            json.error= "Todos os campos são obrigatórios"
+            return response.status(400).json(json)
+        }
+
+        let aluno = await alunoService.createAluno(foto,nome,telefone,data_nascimento, fk_curso, email)
+
+        json.result = `Aluno: ${nome} cadastrado com sucesso! ID: { ${aluno.insertId}}`
+        response.status(201).json(json)
+
+    },
+
     findAllAlunos: async (request, response) => {
         let json = {error: "", result: []}                  //Objeto json inicializado com duas chaves, error(vazia) e result(lista vazia)
 

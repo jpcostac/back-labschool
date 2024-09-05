@@ -1,3 +1,4 @@
+const upload = require('./config/multerConfig')
 const express = require('express')
 const route = express.Router()
 const cors = require('cors')
@@ -14,6 +15,8 @@ route.delete('/curso/:id',cursoController.deleteCurso)//Delete
 
 route.get('/aluno', alunoController.findAllAlunos)
 route.get('/aluno/:id',alunoController.findAlunoById)
+route.post('/aluno',upload.single('image'), alunoController.saveAluno)
+//route.put('/aluno/:id',alunoController.updateAluno)
 route.delete('/aluno/:id',alunoController.deleteAluno)
 
 module.exports = route
