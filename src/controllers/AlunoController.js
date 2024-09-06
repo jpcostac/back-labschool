@@ -92,7 +92,37 @@ module.exports = {
             json.error = "Id do aluno é obrigatório"
             response.status(404).json(json)
         }
-    }
+    }, 
 
+    //Método para atualizar um aluno
+    updateAluno: async(request, response) => {
+        let json = {error: "", result: ""}
+
+        let id = request.params.id
+
+        let foto = request.file.buffer
+        let nome = request.body.nome
+        let telefone = request.body.telefone
+        let data_nascimento = request.body.data_nascimento
+        let email = request.body.email
+
+        let alunoValid = await alunoService.getAlunoById(id)
+
+        if(alunoValid.length == 0){
+            json.error = "Aluno não encontrado"
+            response.status(404).json(json)
+        }//else{
+            if(nome != "" && telefone != "" && data_nascimento != "" && email != ""){
+                await alunoService.updateAluno(id, foto, nome, telefone, data_nascimento, email)            
+
+                json.result = `Aluno: ${nome} atualizado com sucesso! ID: ${id}`
+                response.status(200).json(json)
+
+            }else{
+                json.error= "Todos os campos são obrigatórios"
+                return response.status(400).json(json)  
+            }
+        //}   
+    }
     
 }

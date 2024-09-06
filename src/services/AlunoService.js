@@ -70,6 +70,20 @@ module.exports = {                                      //Exporta as funções p
                 resolve(result)
             })
         })
+    },
+
+    updateAluno: (id, foto, nome, telefone, data_nascimento, email) => {
+        return new Promise((resolve,reject) => {
+            database.query(`UPDATE aluno SET foto = ?, nome = ?, telefone =?, data_nascimento = ?, email = ? WHERE id = ?`, [foto,nome,telefone, data_nascimento, email, id],
+                (err, result) => {
+                    if(err){
+                        reject(err)
+                        return
+                    }
+                    resolve(result)
+                }
+            )
+        })
     }
 }
 
